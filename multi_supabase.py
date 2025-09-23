@@ -26,7 +26,11 @@ class SupabaseProject:
             # Filter out proxy and other unwanted environment variables
             import os
             env_backup = {}
-            unwanted_vars = ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 'proxy']
+            unwanted_vars = [
+                'HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 'proxy',
+                'ALL_PROXY', 'all_proxy', 'NO_PROXY', 'no_proxy',
+                'FTP_PROXY', 'ftp_proxy', 'SOCKS_PROXY', 'socks_proxy'
+            ]
             
             # Temporarily remove unwanted environment variables
             for var in unwanted_vars:
@@ -35,7 +39,34 @@ class SupabaseProject:
                     del os.environ[var]
             
             try:
+                # Create client with explicit parameters only
                 self.client = create_client(self.url, self.key)
+            except Exception as e:
+                print(f"❌ Error creating Supabase client for {self.name}: {e}")
+                # Try with minimal environment
+                import subprocess
+                import sys
+                
+                # Create a clean environment
+                clean_env = {k: v for k, v in os.environ.items() 
+                           if not any(unwanted in k.lower() for unwanted in ['proxy', 'http', 'https'])}
+                
+                # Restore essential variables
+                for key in ['PATH', 'PYTHONPATH', 'HOME', 'USER']:
+                    if key in os.environ:
+                        clean_env[key] = os.environ[key]
+                
+                # Temporarily replace environment
+                old_env = os.environ.copy()
+                os.environ.clear()
+                os.environ.update(clean_env)
+                
+                try:
+                    self.client = create_client(self.url, self.key)
+                finally:
+                    # Restore original environment
+                    os.environ.clear()
+                    os.environ.update(old_env)
             finally:
                 # Restore environment variables
                 for var, value in env_backup.items():

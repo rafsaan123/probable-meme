@@ -10,10 +10,6 @@ import os
 import json
 from typing import Dict, List, Optional, Any
 
-# Import Supabase modules
-from multi_supabase import get_supabase_client, supabase_manager
-from web_api_fallback import web_api_fallback, test_web_api_connections, list_web_apis
-
 app = Flask(__name__)
 CORS(app)
 
@@ -21,10 +17,27 @@ CORS(app)
 app.config['DEBUG'] = False
 app.config['TESTING'] = False
 
+# Initialize Supabase manager with error handling
+try:
+    from multi_supabase import get_supabase_client, supabase_manager
+    from web_api_fallback import web_api_fallback, test_web_api_connections, list_web_apis
+    SUPABASE_AVAILABLE = True
+    print("✅ Supabase modules loaded successfully")
+except Exception as e:
+    print(f"❌ Error loading Supabase modules: {e}")
+    SUPABASE_AVAILABLE = False
+
 @app.route('/health', methods=['GET'])
 def health_check():
     """Health check endpoint"""
     try:
+        if not SUPABASE_AVAILABLE:
+            return jsonify({
+                'status': 'unhealthy',
+                'supabase_connected': False,
+                'error': 'Supabase modules not available'
+            }), 500
+        
         # Test current project connection
         supabase = get_supabase_client()
         result = supabase.table('programs').select('*').limit(1).execute()
@@ -48,6 +61,9 @@ def health_check():
 def list_projects():
     """List all available Supabase projects"""
     try:
+        if not SUPABASE_AVAILABLE:
+            return jsonify({'error': 'Supabase not available'}), 500
+            
         projects_info = {}
         for name, project in supabase_manager.projects.items():
             projects_info[name] = {
@@ -64,6 +80,9 @@ def list_projects():
 def test_project(project_name):
     """Test connection to a specific project"""
     try:
+        if not SUPABASE_AVAILABLE:
+            return jsonify({'error': 'Supabase not available'}), 500
+            
         if project_name not in supabase_manager.projects:
             return jsonify({'error': f'Project {project_name} not found'}), 404
         
@@ -91,6 +110,9 @@ def test_project(project_name):
 def switch_project(project_name):
     """Switch to a different Supabase project"""
     try:
+        if not SUPABASE_AVAILABLE:
+            return jsonify({'error': 'Supabase not available'}), 500
+            
         if project_name not in supabase_manager.projects:
             return jsonify({'error': f'Project {project_name} not found'}), 404
         
@@ -107,6 +129,9 @@ def switch_project(project_name):
 def list_web_apis():
     """List all configured web APIs"""
     try:
+        if not SUPABASE_AVAILABLE:
+            return jsonify({'error': 'Supabase not available'}), 500
+            
         apis = list_web_apis()
         return jsonify(apis)
     except Exception as e:
@@ -116,6 +141,9 @@ def list_web_apis():
 def test_web_apis():
     """Test all web API connections"""
     try:
+        if not SUPABASE_AVAILABLE:
+            return jsonify({'error': 'Supabase not available'}), 500
+            
         results = test_web_api_connections()
         return jsonify(results)
     except Exception as e:
@@ -125,6 +153,9 @@ def test_web_apis():
 def search_result():
     """Search for student results across all Supabase projects with web API fallback"""
     try:
+        if not SUPABASE_AVAILABLE:
+            return jsonify({'error': 'Supabase not available'}), 500
+            
         data = request.get_json()
         if not data:
             return jsonify({'error': 'No JSON data provided'}), 400
@@ -199,6 +230,9 @@ def search_result():
 def get_regulations(program):
     """Get available regulations for a program"""
     try:
+        if not SUPABASE_AVAILABLE:
+            return jsonify({'error': 'Supabase not available'}), 500
+            
         supabase = get_supabase_client()
         result = supabase.table('regulations').select('regulation_year').eq('program_name', program).execute()
         
@@ -211,6 +245,9 @@ def get_regulations(program):
 def get_stats():
     """Get database statistics"""
     try:
+        if not SUPABASE_AVAILABLE:
+            return jsonify({'error': 'Supabase not available'}), 500
+            
         supabase = get_supabase_client()
         
         # Get counts from different tables
