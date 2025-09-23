@@ -23,7 +23,23 @@ class SupabaseProject:
     def get_client(self):
         """Get or create Supabase client for this project"""
         if not self.client:
-            self.client = create_client(self.url, self.key)
+            # Filter out proxy and other unwanted environment variables
+            import os
+            env_backup = {}
+            unwanted_vars = ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 'proxy']
+            
+            # Temporarily remove unwanted environment variables
+            for var in unwanted_vars:
+                if var in os.environ:
+                    env_backup[var] = os.environ[var]
+                    del os.environ[var]
+            
+            try:
+                self.client = create_client(self.url, self.key)
+            finally:
+                # Restore environment variables
+                for var, value in env_backup.items():
+                    os.environ[var] = value
         return self.client
     
     def test_connection(self) -> bool:

@@ -9,6 +9,8 @@ from flask_cors import CORS
 import os
 import json
 from typing import Dict, List, Optional, Any
+
+# Import Supabase modules
 from multi_supabase import get_supabase_client, supabase_manager
 from web_api_fallback import web_api_fallback, test_web_api_connections, list_web_apis
 
