@@ -8,7 +8,6 @@ import os
 import json
 from typing import Dict, List, Optional
 from supabase import create_client
-from web_api_fallback import search_student_in_web_apis
 
 class SupabaseProject:
     """Represents a single Supabase project configuration"""
@@ -265,28 +264,9 @@ class MultiSupabaseManager:
                 print(f"❌ Error searching in {project_name}: {e}")
                 continue
         
-        # If not found in any Supabase project, try web APIs
-        print(f"🌐 Student not found in any Supabase project, trying web APIs...")
-        web_api_result = search_student_in_web_apis(roll_no, regulation, program)
-        
-        if web_api_result:
-            print(f"🎯 Student found in web API: {web_api_result['source']}")
-            return {
-                'student_data': web_api_result['student_data'],
-                'institute_data': web_api_result['institute_data'],
-                'project_name': web_api_result['source'],
-                'projects_tried': projects_tried + ['web_apis'],
-                'source': 'web_api',
-                'gpa_records': web_api_result.get('gpa_records', [])
-            }
-        
-        return {
-            'student_data': None,
-            'institute_data': None,
-            'project_name': None,
-            'projects_tried': projects_tried + ['web_apis'],
-            'source': 'none'
-        }
+        # If not found in any Supabase project, return None
+        print(f"❌ Student not found in any Supabase project")
+        return None
     
     def save_config(self):
         """Save current configuration to file"""
