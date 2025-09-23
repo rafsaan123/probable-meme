@@ -167,7 +167,14 @@ class WebAPIFallback:
                 print(f"⏭️ Trying next web API...")
         
         print(f"❌ Student not found in any web API")
-        return None
+        return {
+            'success': False,
+            'error': 'Student not found in any web API',
+            'roll': roll_no,
+            'regulation': regulation,
+            'exam': program,
+            'web_apis_tried': [api['name'] for api in sorted_apis]
+        }
     
     def test_web_api_connection(self, api_config: Dict) -> bool:
         """Test connection to a web API"""
