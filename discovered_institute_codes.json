@@ -1,0 +1,161 @@
+{
+  "institute_codes": [
+    "16057",
+    "16058",
+    "16059",
+    "16100",
+    "19057",
+    "19063",
+    "19067",
+    "19078",
+    "19086",
+    "23071",
+    "23104",
+    "23105",
+    "23106",
+    "23107",
+    "23117",
+    "23119",
+    "23189"
+  ],
+  "institutes_data": [
+    {
+      "code": "23071",
+      "name": "National Science Research And Technology College",
+      "district": "Rajshahi",
+      "program": "Diploma in Engineering",
+      "regulation_year": "2022",
+      "doc_id": "Diploma in Engineering_2022_23071"
+    },
+    {
+      "code": "23104",
+      "name": "Bangladesh Polytechnic Institute",
+      "district": "Rajshahi",
+      "program": "Diploma in Engineering",
+      "regulation_year": "2022",
+      "doc_id": "Diploma in Engineering_2022_23104"
+    },
+    {
+      "code": "23105",
+      "name": "Rajshahi Polytechnic Institute",
+      "district": "Rajshahi",
+      "program": "Diploma in Engineering",
+      "regulation_year": "2022",
+      "doc_id": "Diploma in Engineering_2022_23105"
+    },
+    {
+      "code": "23106",
+      "name": "Rajshahi Govt. Survey Institute",
+      "district": "Rajshahi",
+      "program": "Diploma in Engineering",
+      "regulation_year": "2022",
+      "doc_id": "Diploma in Engineering_2022_23106"
+    },
+    {
+      "code": "23107",
+      "name": "The North Polytechnic Institute",
+      "district": "Rajshahi",
+      "program": "Diploma in Engineering",
+      "regulation_year": "2022",
+      "doc_id": "Diploma in Engineering_2022_23107"
+    },
+    {
+      "code": "23117",
+      "name": "Rajshahi Mohila Polytechnic Institute",
+      "district": "Rajshahi",
+      "program": "Diploma in Engineering",
+      "regulation_year": "2022",
+      "doc_id": "Diploma in Engineering_2022_23117"
+    },
+    {
+      "code": "23119",
+      "name": "Puthia Polytechnic Institute",
+      "district": "Rajshahi",
+      "program": "Diploma in Engineering",
+      "regulation_year": "2022",
+      "doc_id": "Diploma in Engineering_2022_23119"
+    },
+    {
+      "code": "23189",
+      "name": "Rajshahi Haji Abul Hossen Institute Of Technology",
+      "district": "Rajshahi",
+      "program": "Diploma in Engineering",
+      "regulation_year": "2022",
+      "doc_id": "Diploma in Engineering_2022_23189"
+    },
+    {
+      "code": "19057",
+      "name": "Cybertech Polytecnic Institute",
+      "district": "Joypurhat",
+      "program": "Diploma in Engineering",
+      "regulation_year": "2022",
+      "doc_id": "Diploma in Engineering_2022_19057"
+    },
+    {
+      "code": "19063",
+      "name": "Srijonshil Polytechnic Institute",
+      "district": "Joypurhat",
+      "program": "Diploma in Engineering",
+      "regulation_year": "2022",
+      "doc_id": "Diploma in Engineering_2022_19063"
+    },
+    {
+      "code": "19067",
+      "name": "Noble Polytechnic Institute",
+      "district": "Joypurhat",
+      "program": "Diploma in Engineering",
+      "regulation_year": "2022",
+      "doc_id": "Diploma in Engineering_2022_19067"
+    },
+    {
+      "code": "19078",
+      "name": "Technological Institute Joypurhat",
+      "district": "Joypurhat",
+      "program": "Diploma in Engineering",
+      "regulation_year": "2022",
+      "doc_id": "Diploma in Engineering_2022_19078"
+    },
+    {
+      "code": "19086",
+      "name": "TMSS Private Polytechnic Institute (TPI)",
+      "district": "Joypurhat",
+      "program": "Diploma in Engineering",
+      "regulation_year": "2022",
+      "doc_id": "Diploma in Engineering_2022_19086"
+    },
+    {
+      "code": "16057",
+      "name": "Institute Of Engineering And Technology",
+      "district": "Rangpur",
+      "program": "Diploma in Engineering",
+      "regulation_year": "2022",
+      "doc_id": "Diploma in Engineering_2022_16057"
+    },
+    {
+      "code": "16058",
+      "name": "Rangpur Polytechnic Institute",
+      "district": "Rangpur",
+      "program": "Diploma in Engineering",
+      "regulation_year": "2022",
+      "doc_id": "Diploma in Engineering_2022_16058"
+    },
+    {
+      "code": "16059",
+      "name": "Baily Bridge Agriculture And Polytechnic Institute",
+      "district": "Rangpur",
+      "program": "Diploma in Engineering",
+      "regulation_year": "2022",
+      "doc_id": "Diploma in Engineering_2022_16059"
+    },
+    {
+      "code": "16100",
+      "name": "Rangpur Ideal Institute Of  Technology",
+      "district": "Rangpur",
+      "program": "Diploma in Engineering",
+      "regulation_year": "2022",
+      "doc_id": "Diploma in Engineering_2022_16100"
+    }
+  ],
+  "total_codes": 17,
+  "total_records": 17
+}
