@@ -10,7 +10,7 @@ import os
 import json
 from typing import Dict, List, Optional, Any
 from multi_supabase import get_supabase_client, supabase_manager
-from web_api_fallback import web_api_fallback, test_web_api_connections, list_web_apis
+from web_api_fallback import search_student_in_web_apis, test_web_api_connections, list_web_apis, get_web_api_configs, test_web_api_connection
 
 app = Flask(__name__)
 CORS(app)
@@ -160,7 +160,7 @@ def list_web_apis_endpoint():
     """List all configured web APIs"""
     try:
         apis_info = []
-        for api_config in web_api_fallback.web_apis:
+        for api_config in get_web_api_configs():
             apis_info.append({
                 'name': api_config['name'],
                 'description': api_config['description'],
@@ -183,8 +183,8 @@ def test_web_apis_endpoint():
     """Test all web API connections"""
     try:
         results = []
-        for api_config in web_api_fallback.web_apis:
-            is_working = web_api_fallback.test_web_api_connection(api_config)
+        for api_config in get_web_api_configs():
+            is_working = test_web_api_connection(api_config)
             results.append({
                 'name': api_config['name'],
                 'status': 'connected' if is_working else 'failed',

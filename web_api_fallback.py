@@ -249,6 +249,14 @@ def list_web_apis():
     """List all web APIs"""
     web_api_fallback.list_web_apis()
 
+def get_web_api_configs():
+    """Get web API configurations"""
+    return web_api_fallback.web_apis
+
+def test_web_api_connection(api_config):
+    """Test connection to a web API"""
+    return web_api_fallback.test_web_api_connection(api_config)
+
 if __name__ == "__main__":
     print("🌐 Web API Fallback System")
     print("=" * 30)
