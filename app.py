@@ -20,7 +20,7 @@ app.config['TESTING'] = False
 # Initialize Supabase manager with error handling
 try:
     from multi_supabase import get_supabase_client, supabase_manager
-    from web_api_fallback import web_api_fallback, test_web_api_connections, list_web_apis
+    from web_api_fallback import search_student_in_web_apis, test_web_api_connections, list_web_apis
     SUPABASE_AVAILABLE = True
     print("✅ Supabase modules loaded successfully")
 except Exception as e:
@@ -208,7 +208,7 @@ def search_result():
         else:
             # Try web API fallback
             print(f"🌐 Student not found in any Supabase project, trying web APIs...")
-            web_result = web_api_fallback(roll_no, regulation, program)
+            web_result = search_student_in_web_apis(roll_no, regulation, program)
             
             if web_result and web_result.get('success'):
                 return jsonify(web_result)
