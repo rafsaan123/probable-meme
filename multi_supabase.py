@@ -23,54 +23,61 @@ class SupabaseProject:
     def get_client(self):
         """Get or create Supabase client for this project"""
         if not self.client:
-            # Filter out proxy and other unwanted environment variables
+            # Create a completely isolated environment for Supabase client creation
             import os
-            env_backup = {}
-            unwanted_vars = [
-                'HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 'proxy',
-                'ALL_PROXY', 'all_proxy', 'NO_PROXY', 'no_proxy',
-                'FTP_PROXY', 'ftp_proxy', 'SOCKS_PROXY', 'socks_proxy'
-            ]
+            import subprocess
+            import sys
             
-            # Temporarily remove unwanted environment variables
-            for var in unwanted_vars:
+            # Backup current environment
+            original_env = os.environ.copy()
+            
+            # Create minimal clean environment
+            clean_env = {}
+            essential_vars = ['PATH', 'PYTHONPATH', 'HOME', 'USER', 'LANG', 'LC_ALL']
+            
+            for var in essential_vars:
                 if var in os.environ:
-                    env_backup[var] = os.environ[var]
-                    del os.environ[var]
+                    clean_env[var] = os.environ[var]
+            
+            # Add Supabase-specific environment variables if they exist
+            supabase_vars = ['SUPABASE_URL', 'SUPABASE_KEY', 'SUPABASE_ANON_KEY']
+            for var in supabase_vars:
+                if var in os.environ:
+                    clean_env[var] = os.environ[var]
             
             try:
-                # Create client with explicit parameters only
-                self.client = create_client(self.url, self.key)
-            except Exception as e:
-                print(f"❌ Error creating Supabase client for {self.name}: {e}")
-                # Try with minimal environment
-                import subprocess
-                import sys
-                
-                # Create a clean environment
-                clean_env = {k: v for k, v in os.environ.items() 
-                           if not any(unwanted in k.lower() for unwanted in ['proxy', 'http', 'https'])}
-                
-                # Restore essential variables
-                for key in ['PATH', 'PYTHONPATH', 'HOME', 'USER']:
-                    if key in os.environ:
-                        clean_env[key] = os.environ[key]
-                
-                # Temporarily replace environment
-                old_env = os.environ.copy()
+                # Replace environment with clean one
                 os.environ.clear()
                 os.environ.update(clean_env)
                 
+                # Create client in isolated environment
+                self.client = create_client(self.url, self.key)
+                print(f"✅ Successfully created Supabase client for {self.name}")
+                
+            except Exception as e:
+                print(f"❌ Error creating Supabase client for {self.name}: {e}")
+                # Try alternative approach - create client with explicit parameters
                 try:
-                    self.client = create_client(self.url, self.key)
-                finally:
                     # Restore original environment
                     os.environ.clear()
-                    os.environ.update(old_env)
+                    os.environ.update(original_env)
+                    
+                    # Remove proxy variables from current environment
+                    proxy_vars = ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 'proxy']
+                    for var in proxy_vars:
+                        if var in os.environ:
+                            del os.environ[var]
+                    
+                    self.client = create_client(self.url, self.key)
+                    print(f"✅ Successfully created Supabase client for {self.name} (fallback method)")
+                    
+                except Exception as e2:
+                    print(f"❌ Failed to create Supabase client for {self.name}: {e2}")
+                    raise e2
             finally:
-                # Restore environment variables
-                for var, value in env_backup.items():
-                    os.environ[var] = value
+                # Always restore original environment
+                os.environ.clear()
+                os.environ.update(original_env)
         return self.client
     
     def test_connection(self) -> bool:

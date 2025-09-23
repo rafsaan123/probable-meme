@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Multi-Project BTEB Results API Server using Supabase Database
-Production-ready version for Render deployment
+Production-ready version for Render deployment with isolated Supabase client
 """
 
 from flask import Flask, request, jsonify
@@ -19,10 +19,31 @@ app.config['TESTING'] = False
 
 # Initialize Supabase manager with error handling
 try:
-    from multi_supabase import get_supabase_client, supabase_manager
-    from web_api_fallback import web_api_fallback, test_web_api_connections, list_web_apis
-    SUPABASE_AVAILABLE = True
-    print("✅ Supabase modules loaded successfully")
+    # Clean environment before importing Supabase
+    import os
+    env_backup = {}
+    unwanted_vars = [
+        'HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 'proxy',
+        'ALL_PROXY', 'all_proxy', 'NO_PROXY', 'no_proxy',
+        'FTP_PROXY', 'ftp_proxy', 'SOCKS_PROXY', 'socks_proxy'
+    ]
+    
+    # Temporarily remove unwanted environment variables
+    for var in unwanted_vars:
+        if var in os.environ:
+            env_backup[var] = os.environ[var]
+            del os.environ[var]
+    
+    try:
+        from multi_supabase import get_supabase_client, supabase_manager
+        from web_api_fallback import web_api_fallback, test_web_api_connections, list_web_apis
+        SUPABASE_AVAILABLE = True
+        print("✅ Supabase modules loaded successfully")
+    finally:
+        # Restore environment variables
+        for var, value in env_backup.items():
+            os.environ[var] = value
+            
 except Exception as e:
     print(f"❌ Error loading Supabase modules: {e}")
     SUPABASE_AVAILABLE = False
@@ -38,18 +59,37 @@ def health_check():
                 'error': 'Supabase modules not available'
             }), 500
         
-        # Test current project connection
-        supabase = get_supabase_client()
-        result = supabase.table('programs').select('*').limit(1).execute()
+        # Test current project connection with environment isolation
+        env_backup = {}
+        unwanted_vars = [
+            'HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 'proxy',
+            'ALL_PROXY', 'all_proxy', 'NO_PROXY', 'no_proxy',
+            'FTP_PROXY', 'ftp_proxy', 'SOCKS_PROXY', 'socks_proxy'
+        ]
         
-        return jsonify({
-            'status': 'healthy',
-            'supabase_connected': True,
-            'database': 'supabase',
-            'current_project': supabase_manager.current_project,
-            'available_projects': list(supabase_manager.projects.keys()),
-            'message': 'API server is running and connected to Supabase'
-        })
+        # Temporarily remove unwanted environment variables
+        for var in unwanted_vars:
+            if var in os.environ:
+                env_backup[var] = os.environ[var]
+                del os.environ[var]
+        
+        try:
+            supabase = get_supabase_client()
+            result = supabase.table('programs').select('*').limit(1).execute()
+            
+            return jsonify({
+                'status': 'healthy',
+                'supabase_connected': True,
+                'database': 'supabase',
+                'current_project': supabase_manager.current_project,
+                'available_projects': list(supabase_manager.projects.keys()),
+                'message': 'API server is running and connected to Supabase'
+            })
+        finally:
+            # Restore environment variables
+            for var, value in env_backup.items():
+                os.environ[var] = value
+        
     except Exception as e:
         return jsonify({
             'status': 'unhealthy',
