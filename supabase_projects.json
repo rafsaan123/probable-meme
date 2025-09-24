@@ -1,0 +1,44 @@
+{
+  "current_project": "primary",
+  "search_order": [
+    "primary",
+    "secondary",
+    "tertiary",
+    "backup1",
+    "backup2"
+  ],
+  "projects": {
+    "primary": {
+      "url": "https://hddphaneexloretrisiy.supabase.co",
+      "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhkZHBoYW5lZXhsb3JldHJpc2l5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2MTEzNjksImV4cCI6MjA3NDE4NzM2OX0.eMyOCUDI-iqcGY_tJUbAMw41sPnDDXfHbdMJNfcwP-w",
+      "description": "Primary BTEB Results Database - Main production data"
+    },
+    "secondary": {
+      "url": "https://ncjleyktzilulflbjfdg.supabase.co",
+      "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jamxleWt0emlsdWxmbGJqZmRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2MjI2OTUsImV4cCI6MjA3NDE5ODY5NX0.ScbXuVjULWWyCJt4IuKhUhSunkRg0H0XVVysR7756b0",
+      "description": "Secondary BTEB Results Database"
+    },
+    "tertiary": {
+      "url": "https://your-tertiary-project.supabase.co",
+      "key": "your-tertiary-anon-key",
+      "description": "Tertiary BTEB Results Database - Extended coverage"
+    },
+    "backup1": {
+      "url": "https://your-backup1-project.supabase.co",
+      "key": "your-backup1-anon-key",
+      "description": "Backup Database 1 - Redundancy and failover"
+    },
+    "backup2": {
+      "url": "https://your-backup2-project.supabase.co",
+      "key": "your-backup2-anon-key",
+      "description": "Backup Database 2 - Additional redundancy"
+    }
+  },
+  "settings": {
+    "enable_fallback": true,
+    "max_projects_to_search": 5,
+    "timeout_per_project": 10,
+    "log_search_attempts": true,
+    "cache_results": false
+  }
+}

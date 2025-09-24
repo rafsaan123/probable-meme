@@ -1,0 +1,16 @@
+{
+  "web_apis": [
+    {
+      "name": "btebresulthub",
+      "description": "BTEB Result Hub API",
+      "base_url": "https://btebresulthub-server.vercel.app",
+      "endpoint": "/results/individual/{roll}",
+      "params": {
+        "exam": "{program}",
+        "regulation": "{regulation}"
+      },
+      "priority": 1,
+      "timeout": 10
+    }
+  ]
+}

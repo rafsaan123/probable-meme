@@ -406,15 +406,15 @@ export default function BTEBResultApp() {
                 </View>
                 <View style={styles.resultRow}>
                   <Text style={styles.resultLabel}>Institute</Text>
-                  <Text style={styles.resultValue}>{result.instituteData.name}</Text>
+                  <Text style={styles.resultValue}>{result.instituteData?.name || 'N/A'}</Text>
                 </View>
                 <View style={styles.resultRow}>
                   <Text style={styles.resultLabel}>Institute Code</Text>
-                  <Text style={styles.resultValue}>{result.instituteData.code}</Text>
+                  <Text style={styles.resultValue}>{result.instituteData?.code || 'N/A'}</Text>
                 </View>
                 <View style={styles.resultRow}>
                   <Text style={styles.resultLabel}>District</Text>
-                  <Text style={styles.resultValue}>{result.instituteData.district}</Text>
+                  <Text style={styles.resultValue}>{result.instituteData?.district || 'N/A'}</Text>
                 </View>
               </View>
               

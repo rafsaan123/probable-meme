@@ -40,7 +40,7 @@ interface ApiResponse {
 const API_ENDPOINT = '/api/search-result';
 
 // Supabase API server (serves Supabase database with comprehensive BTEB data)
-// Use local server for now (Vercel deployment has issues)
+// Use local server (Vercel API is test-only, doesn't have full functionality)
 const SUPABASE_API = 'http://172.20.10.4:3001';
 
 // Obfuscated function names to hide API calls
