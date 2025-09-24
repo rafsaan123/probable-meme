@@ -48,7 +48,7 @@ def health_check():
             'database': 'supabase',
             'current_project': supabase_manager.current_project,
             'available_projects': list(supabase_manager.projects.keys()),
-            'message': 'API server is running and connected to Supabase'
+            'message': 'API server is running and connected to Supabase (Production Ready)'
         })
         
     except Exception as e:
