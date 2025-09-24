@@ -1,50 +1,54 @@
-# Welcome to your Expo app 👋
+# BTEB Result App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native app for searching BTEB exam results with AdMob integration.
 
-## Get started
+## Features
 
-1. Install dependencies
+- Search student results by roll number
+- Support for multiple programs and regulations
+- AdMob banner and interstitial ads
+- Clean, modern UI
+- Production-ready
 
-   ```bash
-   npm install
-   ```
+## Tech Stack
 
-2. Start the app
+- **React Native** with Expo
+- **TypeScript** for type safety
+- **Expo Router** for navigation
+- **AdMob** for monetization
 
-   ```bash
-   npx expo start
-   ```
+## Getting Started
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
+1. Install dependencies:
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Start the development server:
+```bash
+npm start
+```
 
-## Learn more
+## Building for Production
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+# Build Android APK
+npm run build:android
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+# Build iOS IPA
+npm run build:ios
 
-## Join the community
+# Build for both platforms
+npm run build:all
+```
 
-Join our community of developers creating universal apps.
+## AdMob Configuration
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+The app is configured with production AdMob Ad Unit IDs:
+- **App ID**: `ca-app-pub-8384502110540664~8586571337`
+- **Banner Ad**: `ca-app-pub-8384502110540664/7126698746`
+- **Interstitial Ad**: `ca-app-pub-8384502110540664/7094376320`
+
+## License
+
+MIT License

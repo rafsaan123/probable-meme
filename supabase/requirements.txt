@@ -1,0 +1,12 @@
+# Supabase Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core dependencies
+supabase>=2.0.0
+PyPDF2>=3.0.0
+python-dotenv>=1.0.0
+psycopg2-binary>=2.9.0
+
+# Optional dependencies for better performance
+httpx>=0.24.0
+postgrest>=0.13.0
